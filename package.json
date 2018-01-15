@@ -30,6 +30,7 @@
     "webpack-dev-server": "^2.9.7"
   },
   "dependencies": {
+    "@ciscospark/react-component-icon": "^0.1.207",
     "ciscospark": "^1.21.3",
     "react": "^16.2.0",
     "react-dom": "^16.2.0"

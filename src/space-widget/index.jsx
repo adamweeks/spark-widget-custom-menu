@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
+import CustomActivity from '../custom-activity';
+
 const WIDGET_DIV_ID = 'my-ciscospark-widget';
 
 class SpaceWidget extends Component {
@@ -25,6 +27,17 @@ class SpaceWidget extends Component {
     // Init a new widget
     window.ciscospark.widget(widgetEl).spaceWidget({
       accessToken: this.props.token,
+      customActivityTypes: [
+        {
+          displayName: 'To-Do',
+          name: 'todo',
+          buttonClassName: 'custom-activity',
+          iconClassName: 'icon-pto_16',
+          component: CustomActivity,
+          spaceTypes: ['direct', 'group'],
+          type: 'ACTIVITY_TYPE_PRIMARY'
+        }
+      ],
       toPersonEmail: this.state.toUserEmail
     });
   }
