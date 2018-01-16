@@ -25,7 +25,7 @@ class Main extends Component {
   render() {
     return (
       <div>
-        Spark OAuth Demo <br />
+        Spark Widget OAuth + Custom Menu Demo <br />
         {
           !this.state.authorized &&
           (
