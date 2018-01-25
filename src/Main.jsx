@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
+import ciscospark from 'ciscospark';
 
 import Login from './Login';
+import Logout from './Logout';
 import SpaceWidget from './SpaceWidget';
 
 class Main extends Component {
@@ -9,11 +11,43 @@ class Main extends Component {
 
     this.state = {
       authorized: false,
+      ready: false,
       token: null
     };
 
-    this.handleAuthorize = this.handleAuthorize.bind(this);
+    this.setupSpark();
   }
+
+  componentWillMount() {
+    this.spark.once('ready', () => {
+      this.setState({ready: true});
+
+      if (this.spark.canAuthorize) {
+        // Authorization is successful
+        this.spark.credentials.getUserToken().then((token) => {
+          this.handleAuthorize(token.access_token);
+        });
+      }
+    });
+  }
+
+  setupSpark() {
+    let redirectUri = `${window.location.protocol}//${window.location.host}`;
+    if (window.location.pathname) {
+      redirectUri += window.location.pathname;
+    }
+
+    this.spark = ciscospark.init({
+      config: {
+        credentials: {
+          client_id: process.env.CISCOSPARK_CLIENT_ID,
+          redirect_uri: redirectUri,
+          scope: 'spark:all spark:kms'
+        }
+      }
+    });
+  }
+
 
   handleAuthorize(token) {
     this.setState({
@@ -25,17 +59,24 @@ class Main extends Component {
   render() {
     return (
       <div>
-        Spark Widget OAuth + Custom Menu Demo <br />
+        Spark Widget OAuth + Custom Menu Demo  <br />
         {
-          !this.state.authorized &&
+          !this.state.ready &&
+          <div>Loading...</div>
+        }
+        {
+          this.state.ready && !this.state.authorized &&
           (
-            <Login onAuthorization={this.handleAuthorize} />
+            <Login ready={this.state.ready} spark={this.spark} />
           )
         }
         {
-          this.state.authorized &&
+          this.state.ready && this.state.authorized &&
           (
-            <SpaceWidget token={this.state.token} />
+            <div>
+              <Logout spark={this.spark} />
+              <SpaceWidget token={this.state.token} />
+            </div>
           )
         }
       </div>
