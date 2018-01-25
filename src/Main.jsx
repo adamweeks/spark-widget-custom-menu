@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
-import Login from '../login';
-import SpaceWidget from '../space-widget';
+import Login from './Login';
+import SpaceWidget from './SpaceWidget';
 
 class Main extends Component {
   constructor() {

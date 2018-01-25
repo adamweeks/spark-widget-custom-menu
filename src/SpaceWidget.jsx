@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-import CustomActivity from '../custom-activity';
+import CustomActivity from './CustomActivity';
 
 const WIDGET_DIV_ID = 'my-ciscospark-widget';
 
