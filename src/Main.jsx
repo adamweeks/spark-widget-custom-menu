@@ -59,7 +59,7 @@ class Main extends Component {
   render() {
     return (
       <div>
-        Spark Widget OAuth + Custom Menu Demo  <br />
+        <h2>Spark Widget OAuth + Custom Menu Demo</h2>
         {
           !this.state.ready &&
           <div>Loading...</div>
